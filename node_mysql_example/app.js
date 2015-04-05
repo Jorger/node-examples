@@ -3,8 +3,7 @@ var mysql = require('mysql');
 var app = express();
 var path = require('path');
 
-//add a connection pool so that the 
-//db can handle multiple concurrent connections.
+//add a connection pool so that the db can handle multiple concurrent connections.
 var pool = mysql.createPool({
 	connectionLimit: 100,
 	host : "localhost",
@@ -13,7 +12,6 @@ var pool = mysql.createPool({
 	database : "node_example",
 	debug : false
 });
-
 
 /*
 * function to handle our database request
