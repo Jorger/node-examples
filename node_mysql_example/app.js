@@ -7,9 +7,9 @@ var path = require('path');
 var pool = mysql.createPool({
 	connectionLimit: 100,
 	host : "localhost",
-	user : "root",
-	password : "waviest",
-	database : "node_example",
+	user : "_your_usename",
+	password : "_your_password",
+	database : "_your_db_name",
 	debug : false
 });
 
