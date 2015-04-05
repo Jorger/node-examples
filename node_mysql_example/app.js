@@ -50,9 +50,13 @@ function  handle_database(req,res,queryString){
 
 }
 
+//define a static path so we don't need to resolve a path in every route.
+app.use(express.static(__dirname+"/public"));
+
 //Get all users
 app.get("/",function(req,res){
-	res.sendFile(path.join(__dirname,"/public/index.html"));
+	res.sendFile("index.html");
+	//res.sendFile(path.join(__dirname,"/public/index.html"));
 });
 
 //Get all users
