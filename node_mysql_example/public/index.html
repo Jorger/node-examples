@@ -1,65 +1,45 @@
 <html>
 <head>
   <title>Node / Mysql Example</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/mainCtrl.js"></script>
 </head>
-<body>
-	<div style="margin:100px;">
-	    <nav class="navbar navbar-inverse navbar-static-top">
-		  	<div class="container">
-			    <a class="navbar-brand" href="/">Node and Mysql</a>
-			    <ul class="nav navbar-nav">
-		      		<li class="active">
-			        	<a href="#" onclick="getUsersByName('names');return false;">List names</a>
-			      	</li>
-			      	<li>
-			        	<a href="#" onclick="getUsersByName('ids');return false;">List ids</a>
-			      	</li>
-			    </ul>
-		  	</div>
-		</nav>
-		<div class="jumbotron"  style="padding:40px;">
-			<div id="dataholder"></div>
-	    </div>
+<body ng-app="myApp">
+	<div style="margin:100px;" ng-controller="mainCtrl" ng-init="populate()">
+	 	<div class="btn-group btn-group-justified" role="group" aria-label="..." style="margin: 20px 20px 0px 0px;">
+      		<div class="btn-group " role="group">
+            	<button type="button" class="btn btn-primary" ng-click="getUsersByName('users');">Refresh list</button>
+         	</div>
+ 	 	</div>
+
+	     <table id="usertable" class="table table-striped table-hover table-bordered" style="margin:20px auto;">
+          <tbody>
+            <tr>
+              <th colspan="2" style="text-align:center">Users</th>
+            </tr>
+            <tr>
+            	<th >Name</th>
+            	<th >User id</th>
+            </tr>
+            
+            <tr ng-repeat="user in users" >
+              <td>
+                <span>{{user.username}} </span> 
+               
+              </td>
+              <td>
+              	 <span>{{user.userid}} </span> 
+              </td>
+            </tr>
+         </tbody>
+       </table>
   	</div>
-	<script type="text/javascript">
-		/*
-			Obviously there a better way to get and parse the data.
-			But for sake of simplicity we will leave it like this for
-			now.
-		*/
-
-		function getUsersByName(querystr){
-			$.ajax({
-				url: "/"+querystr,
-				type : 'JSON',
-				method : 'GET',
-				success : function(data){
-					appendToDiv(data);
-				},
-				error: function(xhr,status,statustext){
-					console.log(xhr);
-				}
-			});
-		}
-
-		function appendToDiv(data){
-			var el = document.getElementById('dataholder');
-			data.forEach(function(user){
-				var name = user.username;
-				var id  = user.userid;
-
-				if(id){
-					el.innerHTML +=  '<li>' + "Id : " + id + '</li>';
-				}
-				else{
-					el.innerHTML +=  '<li>' +"Name : "+ user.username + '</li>';
-				}
-			});
-		}
-	</script>
 </body>
 </html>

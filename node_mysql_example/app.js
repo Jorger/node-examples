@@ -2,6 +2,7 @@ var express = require('express');
 var mysql = require('mysql');
 var app = express();
 var path = require('path');
+var routes  = require('./routes/index');
 
 //add a connection pool so that the db can handle multiple concurrent connections.
 var pool = mysql.createPool({
@@ -45,16 +46,15 @@ function  handle_database(req,res,queryString){
 			});
 		});
 	});
-
 }
 
 //define a static path so we don't need to resolve a path in every route.
 app.use(express.static(__dirname+"/public"));
+app.use(express.static(__dirname+"/public/js"));
 
 //Get all users
 app.get("/",function(req,res){
 	res.sendFile("index.html");
-	//res.sendFile(path.join(__dirname,"/public/index.html"));
 });
 
 //Get all users
@@ -65,19 +65,16 @@ app.get("/users",function(req,res){
 //Get the names of all uses in the db
 app.get("/names",function(req,res){
 	handle_database(req,res,"select username from nodeusers");
-	//res.end("Hello you are connected..");
 });
 
 //Get the id of all users in the db
 app.get("/ids",function(req,res){
 	handle_database(req,res,"select userid from nodeusers");
-	//res.end("Hello you are connected..");
 });
 
 //Get user by id
 app.get("/users/:id",function(req,res){
 	handle_database(req,res,"SELECT * FROM nodeusers WHERE userid ="+req.params.id);
-	//res.end("Hello you are connected..");
 });
 
 //Listend on port 3000
