@@ -29,7 +29,7 @@
             	<th >User id</th>
             </tr>
             
-            <tr ng-repeat="user in users" >
+            <tr ng-repeat="user in users track by $index" >
               <td>
                 <span>{{user.username}} </span> 
                
